@@ -22,7 +22,10 @@ function apex_enquiry_form( $context = '' ) {
 
 	// Pre-fill the message when arriving from a specific event's "Enquire" button.
 	$event_title = isset( $_GET['event'] ) ? sanitize_text_field( wp_unslash( $_GET['event'] ) ) : '';
-	$prefill     = $event_title ? sprintf( __( 'I am interested in: %s', 'apex-learnsphere' ), $event_title ) : '';
+	$visitor_type = isset( $_GET['visitor_type'] ) ? sanitize_text_field( wp_unslash( $_GET['visitor_type'] ) ) : '';
+	$interest     = isset( $_GET['interest'] ) ? sanitize_text_field( wp_unslash( $_GET['interest'] ) ) : '';
+	$message      = isset( $_GET['message'] ) ? sanitize_textarea_field( wp_unslash( $_GET['message'] ) ) : '';
+	$prefill      = $message ? $message : ( $event_title ? sprintf( __( 'I am interested in: %s', 'apex-learnsphere' ), $event_title ) : '' );
 
 	if ( '1' === $sent ) {
 		echo '<div class="form-notice form-notice--success" role="status"><p><strong>Thank you — your enquiry has been received.</strong> A member of our team will be in touch shortly.</p></div>';
@@ -58,24 +61,24 @@ function apex_enquiry_form( $context = '' ) {
 				<label for="apex-type">I am a… <span class="req">*</span></label>
 				<select id="apex-type" name="visitor_type" required>
 					<option value="">Please select</option>
-					<option value="School / Institution">School / Institution</option>
-					<option value="Student">Student</option>
-					<option value="Parent / Family">Parent / Family</option>
-					<option value="Business / Organisation">Business / Organisation</option>
-					<option value="Sports Organisation">Sports Organisation</option>
-					<option value="Other">Other</option>
+					<option value="School / Institution" <?php selected( $visitor_type, 'School / Institution' ); ?>>School / Institution</option>
+					<option value="Student" <?php selected( $visitor_type, 'Student' ); ?>>Student</option>
+					<option value="Parent / Family" <?php selected( $visitor_type, 'Parent / Family' ); ?>>Parent / Family</option>
+					<option value="Business / Organisation" <?php selected( $visitor_type, 'Business / Organisation' ); ?>>Business / Organisation</option>
+					<option value="Sports Organisation" <?php selected( $visitor_type, 'Sports Organisation' ); ?>>Sports Organisation</option>
+					<option value="Other" <?php selected( $visitor_type, 'Other' ); ?>>Other</option>
 				</select>
 			</div>
 			<div class="form-field">
 				<label for="apex-interest">Area of interest <span class="req">*</span></label>
 				<select id="apex-interest" name="interest" required>
 					<option value="">Please select</option>
-					<option value="Education">Education</option>
-					<option value="Career Guidance & Counselling">Career Guidance &amp; Counselling</option>
-					<option value="Management">Management</option>
-					<option value="Sport">Sport</option>
-					<option value="Business & Leadership">Business &amp; Leadership</option>
-					<option value="General enquiry">General enquiry</option>
+					<option value="Education" <?php selected( $interest, 'Education' ); ?>>Education</option>
+					<option value="Career Guidance & Counselling" <?php selected( $interest, 'Career Guidance & Counselling' ); ?>>Career Guidance &amp; Counselling</option>
+					<option value="Management" <?php selected( $interest, 'Management' ); ?>>Management</option>
+					<option value="Sport" <?php selected( $interest, 'Sport' ); ?>>Sport</option>
+					<option value="Business & Leadership" <?php selected( $interest, 'Business & Leadership' ); ?>>Business &amp; Leadership</option>
+					<option value="General enquiry" <?php selected( $interest, 'General enquiry' ); ?>>General enquiry</option>
 				</select>
 			</div>
 			<div class="form-field form-field--full">

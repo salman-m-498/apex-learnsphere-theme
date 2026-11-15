@@ -372,9 +372,9 @@ function apex_event_summary( $post_id ) {
  * Render an event card.
  *
  * @param int    $event_id Event ID.
- * @param string $tone     Accent colour: coral, yellow, green or blue.
+ * @param string $tone     Accent colour: blue, green or navy.
  */
-function apex_event_card( $event_id, $tone = 'coral' ) {
+function apex_event_card( $event_id, $tone = 'blue' ) {
 	$type  = apex_event_type( $event_id );
 	$recur = apex_event_recurrence( $event_id );
 	$raw   = apex_event_meta( $event_id, 'event_date' );

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'APEX_VERSION', '2.1.0' );
+define( 'APEX_VERSION', '2.1.7' );
 define( 'APEX_DIR', get_template_directory() );
 define( 'APEX_URI', get_template_directory_uri() );
 
@@ -53,6 +53,68 @@ function apex_setup() {
 	);
 
 	add_editor_style( array( 'assets/fonts/fonts.css', 'assets/css/editor.css' ) );
+
+	add_theme_support(
+		'editor-color-palette',
+		array(
+			array(
+				'name'  => __( 'Navy', 'apex-learnsphere' ),
+				'slug'  => 'navy',
+				'color' => '#1a2d44',
+			),
+			array(
+				'name'  => __( 'Blue', 'apex-learnsphere' ),
+				'slug'  => 'blue',
+				'color' => '#2a6aa8',
+			),
+			array(
+				'name'  => __( 'Green', 'apex-learnsphere' ),
+				'slug'  => 'green',
+				'color' => '#4d966f',
+			),
+			array(
+				'name'  => __( 'Blue tint', 'apex-learnsphere' ),
+				'slug'  => 'blue-tint',
+				'color' => '#dfeaf3',
+			),
+			array(
+				'name'  => __( 'Green tint', 'apex-learnsphere' ),
+				'slug'  => 'green-tint',
+				'color' => '#e2efe7',
+			),
+			array(
+				'name'  => __( 'Neutral', 'apex-learnsphere' ),
+				'slug'  => 'neutral',
+				'color' => '#f4f7f9',
+			),
+			array(
+				'name'  => __( 'White', 'apex-learnsphere' ),
+				'slug'  => 'white',
+				'color' => '#ffffff',
+			),
+		)
+	);
+
+	add_theme_support(
+		'editor-gradient-presets',
+		array(
+			array(
+				'name'     => __( 'Navy to blue', 'apex-learnsphere' ),
+				'slug'     => 'navy-blue',
+				'gradient' => 'linear-gradient(135deg, #1a2d44 0%, #2a6aa8 100%)',
+			),
+			array(
+				'name'     => __( 'Blue to green', 'apex-learnsphere' ),
+				'slug'     => 'blue-green',
+				'gradient' => 'linear-gradient(135deg, #2a6aa8 0%, #4d966f 100%)',
+			),
+			array(
+				'name'     => __( 'Blue tint to green tint', 'apex-learnsphere' ),
+				'slug'     => 'tint-pair',
+				'gradient' => 'linear-gradient(135deg, #dfeaf3 0%, #e2efe7 100%)',
+			),
+		)
+	);
 }
 add_action( 'after_setup_theme', 'apex_setup' );
 

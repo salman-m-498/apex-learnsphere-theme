@@ -110,6 +110,78 @@
 		} );
 	}
 
+	// Hero visitor journey: choose an audience, then show the relevant pathway.
+	var journeyTrigger = document.getElementById( 'hero-journey-trigger' );
+	var journeyDialog = document.getElementById( 'hero-journey' );
+
+	if ( journeyTrigger && journeyDialog && 'function' === typeof journeyDialog.showModal ) {
+		var audienceStep = journeyDialog.querySelector( '[data-journey-step="audiences"]' );
+		var audienceChoices = journeyDialog.querySelectorAll( '[data-journey-choice]' );
+		var journeyDetails = journeyDialog.querySelectorAll( '[data-journey-detail]' );
+		var selectedAudience = '';
+
+		var resetJourney = function () {
+			selectedAudience = '';
+			audienceStep.hidden = false;
+			journeyDetails.forEach( function ( detail ) {
+				detail.hidden = true;
+			} );
+		};
+
+		journeyTrigger.addEventListener( 'click', function ( event ) {
+			event.preventDefault();
+			resetJourney();
+			journeyDialog.showModal();
+			if ( audienceChoices.length ) {
+				audienceChoices[ 0 ].focus();
+			}
+		} );
+
+		journeyDialog.addEventListener( 'click', function ( event ) {
+			var closeButton = event.target.closest( '[data-journey-close]' );
+			if ( closeButton ) {
+				journeyDialog.close();
+				return;
+			}
+
+			var choice = event.target.closest( '[data-journey-choice]' );
+			if ( choice ) {
+				selectedAudience = choice.getAttribute( 'data-journey-choice' );
+				audienceStep.hidden = true;
+				journeyDetails.forEach( function ( detail ) {
+					var isSelected = detail.getAttribute( 'data-journey-detail' ) === selectedAudience;
+					detail.hidden = ! isSelected;
+					if ( isSelected ) {
+						detail.querySelector( 'h3' ).focus();
+					}
+				} );
+				return;
+			}
+
+			if ( event.target.closest( '[data-journey-back]' ) ) {
+				journeyDetails.forEach( function ( detail ) {
+					detail.hidden = true;
+				} );
+				audienceStep.hidden = false;
+				var previousChoice = journeyDialog.querySelector( '[data-journey-choice="' + selectedAudience + '"]' );
+				if ( previousChoice ) {
+					previousChoice.focus();
+				}
+				return;
+			}
+
+			// Close only when the actual backdrop (not empty dialog padding) is clicked.
+			if ( event.target === journeyDialog ) {
+				var bounds = journeyDialog.getBoundingClientRect();
+				if ( event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom ) {
+					journeyDialog.close();
+				}
+			}
+		} );
+
+		journeyDialog.addEventListener( 'close', resetJourney );
+	}
+
 	// Subtle scroll reveal for elements marked .reveal.
 	var revealEls = document.querySelectorAll( '.reveal' );
 	if ( 'IntersectionObserver' in window && revealEls.length ) {

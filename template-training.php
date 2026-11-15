@@ -10,7 +10,7 @@
 get_header();
 
 $upcoming = apex_get_upcoming_events();
-$tones    = array( 'coral', 'yellow', 'green', 'blue' );
+$tones    = array( 'blue', 'green' );
 
 $past = array();
 foreach ( get_posts(

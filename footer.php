@@ -22,7 +22,7 @@ $socials = array(
 	<div class="container sock__inner">
 		<div class="sock__panel">
 			<span class="sock__shapes" aria-hidden="true">
-				<svg viewBox="0 0 120 120" focusable="false"><circle cx="46" cy="76" r="40" fill="#ffc933" /><path d="M30 8 110 54 30 100Z" fill="#ff7a45" /></svg>
+				<svg viewBox="0 0 120 120" focusable="false"><circle cx="46" cy="76" r="40" fill="var(--blue-light)" /><path d="M30 8 110 54 30 100Z" fill="var(--green)" /></svg>
 			</span>
 			<h2 class="sock__title" id="sock-title"><?php esc_html_e( 'Ready to move forward?', 'apex-learnsphere' ); ?></h2>
 			<p class="sock__text"><?php esc_html_e( 'Tell us where you are today, and we will help you plan a clear, practical path ahead.', 'apex-learnsphere' ); ?></p>
@@ -103,30 +103,30 @@ $socials = array(
 
 	<div class="site-footer__shapes" aria-hidden="true">
 		<svg viewBox="0 0 1440 150" preserveAspectRatio="xMidYMax slice" focusable="false">
-			<rect x="10" y="74" width="76" height="76" fill="#ff7a45" />
-			<path d="M96 96 150 20l54 76Z" fill="#ffc933" />
-			<path d="M92 150a52 52 0 0 1 104 0Z" fill="#3fae7c" />
-			<circle cx="258" cy="96" r="48" fill="#ffd2c2" />
-			<circle cx="236" cy="128" r="44" fill="#f1ecd9" />
-			<rect x="296" y="76" width="74" height="74" fill="#ffc933" />
-			<circle cx="392" cy="50" r="46" fill="#ff7a45" />
-			<path d="M372 150 428 66l56 84Z" fill="#3fae7c" />
-			<rect x="470" y="46" width="72" height="72" transform="rotate(-28 506 82)" fill="#ffd2c2" />
-			<path d="M476 150a58 58 0 0 1 116 0Z" fill="#ff7a45" />
-			<path d="M560 18 650 62 560 106Z" fill="#ff7a45" />
-			<circle cx="656" cy="112" r="50" fill="#cfeee0" />
-			<path d="M640 80a52 44 0 0 1 104 0Z" fill="#ffc933" />
-			<rect x="716" y="82" width="68" height="68" fill="#ffd2c2" />
-			<circle cx="812" cy="44" r="46" fill="#ffe08a" />
-			<path d="M800 150 858 62l58 88Z" fill="#3fae7c" />
-			<rect x="884" y="36" width="72" height="72" transform="rotate(32 920 72)" fill="#1a2d44" />
-			<path d="M916 150a56 56 0 0 1 112 0Z" fill="#ff7a45" />
-			<path d="M1000 56 1094 34 1064 126Z" fill="#ffd2c2" />
-			<circle cx="1132" cy="98" r="52" fill="#1a2d44" />
-			<rect x="1186" y="70" width="80" height="80" fill="#2168c4" />
-			<path d="M1250 100 1310 14l60 86Z" fill="#ffc933" />
-			<path d="M1290 150a60 60 0 0 1 120 0Z" fill="#3fae7c" />
-			<circle cx="1420" cy="70" r="40" fill="#ffd2c2" />
+			<rect x="10" y="74" width="76" height="76" fill="var(--blue)" />
+			<path d="M96 96 150 20l54 76Z" fill="var(--green)" />
+			<path d="M92 150a52 52 0 0 1 104 0Z" fill="var(--blue-light)" />
+			<circle cx="258" cy="96" r="48" fill="var(--blue-tint)" />
+			<circle cx="236" cy="128" r="44" fill="var(--neutral-deep)" />
+			<rect x="296" y="76" width="74" height="74" fill="var(--green)" />
+			<circle cx="392" cy="50" r="46" fill="var(--blue)" />
+			<path d="M372 150 428 66l56 84Z" fill="var(--green-tint)" />
+			<rect x="470" y="46" width="72" height="72" transform="rotate(-28 506 82)" fill="var(--blue-tint)" />
+			<path d="M476 150a58 58 0 0 1 116 0Z" fill="var(--blue)" />
+			<path d="M560 18 650 62 560 106Z" fill="var(--green)" />
+			<circle cx="656" cy="112" r="50" fill="var(--green-tint)" />
+			<path d="M640 80a52 44 0 0 1 104 0Z" fill="var(--blue-light)" />
+			<rect x="716" y="82" width="68" height="68" fill="var(--blue-tint)" />
+			<circle cx="812" cy="44" r="46" fill="var(--green-light)" />
+			<path d="M800 150 858 62l58 88Z" fill="var(--blue)" />
+			<rect x="884" y="36" width="72" height="72" transform="rotate(32 920 72)" fill="var(--navy)" />
+			<path d="M916 150a56 56 0 0 1 112 0Z" fill="var(--green)" />
+			<path d="M1000 56 1094 34 1064 126Z" fill="var(--blue-tint)" />
+			<circle cx="1132" cy="98" r="52" fill="var(--navy)" />
+			<rect x="1186" y="70" width="80" height="80" fill="var(--blue)" />
+			<path d="M1250 100 1310 14l60 86Z" fill="var(--green)" />
+			<path d="M1290 150a60 60 0 0 1 120 0Z" fill="var(--green-light)" />
+			<circle cx="1420" cy="70" r="40" fill="var(--blue-tint)" />
 		</svg>
 	</div>
 </footer>

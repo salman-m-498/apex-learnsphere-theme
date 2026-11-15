@@ -2,12 +2,13 @@
 
 :root {
 	--navy: #1a2d44;
-	--blue: #2168c4;
-	--yellow: #ffc933;
-	--cream: #fffcf6;
-	--ink: #222222;
-	--muted: #646362;
-	--line: rgba(34, 34, 34, 0.1);
+	--blue: #2a6aa8;
+	--green: #4d966f;
+	--neutral: #f4f7f9;
+	--cream: var(--neutral);
+	--ink: #1a2d44;
+	--muted: #4f5f6d;
+	--line: rgba(26, 45, 68, 0.14);
 }
 
 body {
@@ -33,7 +34,7 @@ a {
 blockquote {
 	margin-left: 0;
 	padding-left: 1.5rem;
-	border-left: 6px solid var(--yellow);
+	border-left: 6px solid var(--green);
 	font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
 	font-size: 1.5rem;
 	font-weight: 400;
