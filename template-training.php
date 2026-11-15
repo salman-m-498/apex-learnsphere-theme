@@ -9,39 +9,22 @@
 
 get_header();
 
-$today = current_time( 'Y-m-d' );
+$upcoming = apex_get_upcoming_events();
+$tones    = array( 'coral', 'yellow', 'green', 'blue' );
 
-$query = new WP_Query(
+$past = array();
+foreach ( get_posts(
 	array(
-		'post_type'      => 'event',
-		'posts_per_page' => -1,
-		'post_status'    => 'publish',
-		'orderby'        => 'meta_value',
-		'meta_key'       => 'event_date',
-		'order'          => 'ASC',
+		'post_type'        => 'event',
+		'posts_per_page'   => -1,
+		'post_status'      => 'publish',
+		'suppress_filters' => false,
 	)
-);
-
-$upcoming = array();
-$past     = array();
-
-if ( $query->have_posts() ) {
-	foreach ( $query->posts as $event ) {
-		if ( apex_event_is_past( $event->ID ) ) {
-			$past[] = $event;
-		} else {
-			$upcoming[] = $event;
-		}
+) as $event ) {
+	if ( apex_event_is_past( $event->ID ) ) {
+		$past[] = $event;
 	}
 }
-
-// Sort upcoming by next occurrence.
-usort(
-	$upcoming,
-	function ( $a, $b ) {
-		return strcmp( apex_event_next_occurrence( $a->ID ), apex_event_next_occurrence( $b->ID ) );
-	}
-);
 
 // Sort past most-recent-first.
 usort(
@@ -70,34 +53,10 @@ usort(
 		<?php if ( $upcoming ) : ?>
 			<div class="event-grid">
 				<?php
-				foreach ( $upcoming as $event ) :
-					$event_id = $event->ID;
-					$type     = apex_event_type( $event_id );
-					$date     = apex_event_next_occurrence( $event_id );
-					$recur    = apex_event_recurrence( $event_id );
-					?>
-					<article class="event-card reveal">
-						<a class="event-card__link" href="<?php echo esc_url( get_permalink( $event_id ) ); ?>">
-							<div class="event-card__date">
-								<span class="event-card__day"><?php echo esc_html( apex_format_event_day( $date ) ); ?></span>
-								<span class="event-card__month"><?php echo esc_html( apex_format_event_month( $date ) ); ?></span>
-							</div>
-							<div class="event-card__body">
-								<span class="event-card__badge event-card__badge--<?php echo esc_attr( $type ); ?>"><?php echo 'online' === $type ? esc_html__( 'Online', 'apex-learnsphere' ) : esc_html__( 'In-person', 'apex-learnsphere' ); ?></span>
-								<h3 class="event-card__title"><?php echo esc_html( get_the_title( $event_id ) ); ?></h3>
-								<p class="event-card__meta">
-									<?php if ( apex_event_time_string( $event_id ) ) : ?>
-										<span><?php echo esc_html( apex_event_time_string( $event_id ) ); ?></span>
-									<?php endif; ?>
-									<?php if ( 'none' !== $recur ) : ?>
-										<span class="event-card__recur"><?php echo 'weekly' === $recur ? esc_html__( 'Repeats weekly', 'apex-learnsphere' ) : esc_html__( 'Repeats monthly', 'apex-learnsphere' ); ?></span>
-									<?php endif; ?>
-								</p>
-								<p class="event-card__loc"><?php echo esc_html( apex_event_location_line( $event_id ) ); ?></p>
-							</div>
-						</a>
-					</article>
-				<?php endforeach; ?>
+				foreach ( $upcoming as $index => $event ) {
+					apex_event_card( $event->ID, $tones[ $index % count( $tones ) ] );
+				}
+				?>
 			</div>
 		<?php else : ?>
 			<p class="lead" style="color: var(--c-text-muted);"><?php esc_html_e( 'New events are being scheduled. Check back soon, or contact us to arrange a programme.', 'apex-learnsphere' ); ?></p>

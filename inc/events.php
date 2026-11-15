@@ -309,3 +309,98 @@ function apex_event_location_line( $post_id ) {
 	$loc = apex_event_meta( $post_id, 'event_location' );
 	return $loc ? $loc : __( 'Location to be confirmed', 'apex-learnsphere' );
 }
+
+/**
+ * Upcoming events, sorted by their next occurrence.
+ *
+ * @param int $limit Maximum number of events to return (0 for all).
+ * @return WP_Post[]
+ */
+function apex_get_upcoming_events( $limit = 0 ) {
+	$events = get_posts(
+		array(
+			'post_type'        => 'event',
+			'posts_per_page'   => -1,
+			'post_status'      => 'publish',
+			'suppress_filters' => false,
+		)
+	);
+
+	$upcoming = array();
+	foreach ( $events as $event ) {
+		if ( ! apex_event_is_past( $event->ID ) ) {
+			$upcoming[] = $event;
+		}
+	}
+
+	usort(
+		$upcoming,
+		function ( $a, $b ) {
+			return strcmp( apex_event_next_occurrence( $a->ID ), apex_event_next_occurrence( $b->ID ) );
+		}
+	);
+
+	return $limit > 0 ? array_slice( $upcoming, 0, $limit ) : $upcoming;
+}
+
+/**
+ * Long date for event cards, e.g. "Wednesday, 25 Nov 2026".
+ *
+ * @param string $ymd Date in Y-m-d format.
+ * @return string
+ */
+function apex_format_event_long_date( $ymd ) {
+	$ts = $ymd ? strtotime( $ymd ) : false;
+	return $ts ? date_i18n( 'l, j M Y', $ts ) : __( 'Date to be confirmed', 'apex-learnsphere' );
+}
+
+/**
+ * Short summary of an event for cards.
+ *
+ * @param int $post_id Event ID.
+ * @return string
+ */
+function apex_event_summary( $post_id ) {
+	if ( has_excerpt( $post_id ) ) {
+		return get_the_excerpt( $post_id );
+	}
+	$content = wp_strip_all_tags( strip_shortcodes( (string) get_post_field( 'post_content', $post_id ) ) );
+	return wp_trim_words( $content, 22, '…' );
+}
+
+/**
+ * Render an event card.
+ *
+ * @param int    $event_id Event ID.
+ * @param string $tone     Accent colour: coral, yellow, green or blue.
+ */
+function apex_event_card( $event_id, $tone = 'coral' ) {
+	$type  = apex_event_type( $event_id );
+	$recur = apex_event_recurrence( $event_id );
+	$raw   = apex_event_meta( $event_id, 'event_date' );
+	$date  = $raw ? apex_event_next_occurrence( $event_id ) : '';
+	$time  = apex_event_time_string( $event_id );
+	?>
+	<article class="event-card event-card--<?php echo esc_attr( $tone ); ?> reveal">
+		<a class="event-card__link" href="<?php echo esc_url( get_permalink( $event_id ) ); ?>">
+			<span class="event-card__when">
+				<span class="event-card__date"><?php echo esc_html( apex_format_event_long_date( $date ) ); ?></span>
+				<?php if ( $time ) : ?>
+					<span class="event-card__time"><?php echo esc_html( $time ); ?></span>
+				<?php endif; ?>
+			</span>
+			<span class="event-card__body">
+				<span class="event-card__tags">
+					<span class="event-card__badge event-card__badge--<?php echo esc_attr( $type ); ?>"><?php echo 'online' === $type ? esc_html__( 'Online', 'apex-learnsphere' ) : esc_html__( 'In-person', 'apex-learnsphere' ); ?></span>
+					<?php if ( 'none' !== $recur ) : ?>
+						<span class="event-card__recur"><?php echo 'weekly' === $recur ? esc_html__( 'Repeats weekly', 'apex-learnsphere' ) : esc_html__( 'Repeats monthly', 'apex-learnsphere' ); ?></span>
+					<?php endif; ?>
+				</span>
+				<span class="event-card__title"><?php echo esc_html( get_the_title( $event_id ) ); ?></span>
+				<span class="event-card__summary"><?php echo esc_html( apex_event_summary( $event_id ) ); ?></span>
+				<span class="event-card__loc"><?php echo esc_html( apex_event_location_line( $event_id ) ); ?></span>
+			</span>
+		</a>
+	</article>
+	<?php
+}

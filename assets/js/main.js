@@ -1,49 +1,111 @@
 /**
  * Apex LearnSphere — front-end behaviour.
- * Full-screen index menu, scroll reveal, kinetic hero headline, ascent-line draw.
+ * Header scroll state, mobile panel, dropdowns and scroll reveal.
  */
 ( function () {
 	'use strict';
 
-	// Full-screen overlay menu.
-	var overlay = document.getElementById( 'site-menu' );
-	var openBtn = document.querySelector( '[data-menu-open]' );
-	var closeBtn = document.querySelector( '[data-menu-close]' );
+	var header = document.getElementById( 'masthead' );
+	var toggle = document.querySelector( '.nav-toggle' );
+	var nav = document.getElementById( 'site-navigation' );
 
-	function setMenu( open ) {
-		if ( ! overlay ) {
+	// Header: transparent at the very top, floating glass once the page scrolls.
+	if ( header ) {
+		var SCROLL_THRESHOLD = 4;
+		var ticking = false;
+
+		var updateHeader = function () {
+			ticking = false;
+			header.classList.toggle( 'is-scrolled', window.pageYOffset > SCROLL_THRESHOLD );
+		};
+
+		window.addEventListener(
+			'scroll',
+			function () {
+				if ( ! ticking ) {
+					ticking = true;
+					window.requestAnimationFrame( updateHeader );
+				}
+			},
+			{ passive: true }
+		);
+
+		updateHeader();
+	}
+
+	function setNav( open ) {
+		if ( ! toggle || ! nav ) {
 			return;
 		}
-		document.body.classList.toggle( 'menu-open', open );
-		overlay.classList.toggle( 'is-open', open );
-		overlay.setAttribute( 'aria-hidden', open ? 'false' : 'true' );
-		if ( openBtn ) {
-			openBtn.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
-		}
-		if ( closeBtn ) {
-			closeBtn.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+		nav.classList.toggle( 'is-open', open );
+		toggle.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+		if ( header ) {
+			header.classList.toggle( 'is-menu-open', open );
 		}
 	}
 
-	if ( overlay ) {
-		if ( openBtn ) {
-			openBtn.addEventListener( 'click', function () {
-				setMenu( true );
-			} );
+	function closeDropdowns( except ) {
+		if ( ! nav ) {
+			return;
 		}
-		if ( closeBtn ) {
-			closeBtn.addEventListener( 'click', function () {
-				setMenu( false );
-			} );
-		}
-		overlay.addEventListener( 'click', function ( e ) {
-			if ( e.target.closest( 'a' ) ) {
-				setMenu( false );
+		nav.querySelectorAll( '.menu-item-has-children.is-open' ).forEach( function ( item ) {
+			if ( item !== except ) {
+				item.classList.remove( 'is-open' );
+				var link = item.querySelector( 'a' );
+				if ( link ) {
+					link.setAttribute( 'aria-expanded', 'false' );
+				}
 			}
 		} );
+	}
+
+	if ( toggle && nav ) {
+		toggle.addEventListener( 'click', function () {
+			setNav( ! nav.classList.contains( 'is-open' ) );
+		} );
+
+		// Dropdown parents: placeholder links ("#") open their submenu on click.
+		nav.querySelectorAll( '.menu-item-has-children > a' ).forEach( function ( link ) {
+			var href = link.getAttribute( 'href' );
+			var isPlaceholder = ! href || '#' === href;
+
+			link.setAttribute( 'aria-haspopup', 'true' );
+			link.setAttribute( 'aria-expanded', 'false' );
+
+			if ( isPlaceholder ) {
+				link.setAttribute( 'role', 'button' );
+				link.addEventListener( 'click', function ( e ) {
+					var item = link.parentNode;
+					var open = ! item.classList.contains( 'is-open' );
+					e.preventDefault();
+					closeDropdowns( item );
+					item.classList.toggle( 'is-open', open );
+					link.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+				} );
+			}
+		} );
+
+		// Close the mobile panel when a real link is followed.
+		nav.addEventListener( 'click', function ( e ) {
+			var link = e.target.closest( 'a' );
+			if ( link && 'button' !== link.getAttribute( 'role' ) ) {
+				setNav( false );
+			}
+		} );
+
+		document.addEventListener( 'click', function ( e ) {
+			if ( ! e.target.closest( '.menu-item-has-children' ) ) {
+				closeDropdowns();
+			}
+		} );
+
 		document.addEventListener( 'keydown', function ( e ) {
-			if ( e.key === 'Escape' && overlay.classList.contains( 'is-open' ) ) {
-				setMenu( false );
+			if ( 'Escape' === e.key ) {
+				closeDropdowns();
+				if ( nav.classList.contains( 'is-open' ) ) {
+					setNav( false );
+					toggle.focus();
+				}
 			}
 		} );
 	}
@@ -60,52 +122,15 @@
 					}
 				} );
 			},
-			{ threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+			{ threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
 		);
 
 		revealEls.forEach( function ( el ) {
 			observer.observe( el );
 		} );
-	} else if ( revealEls.length ) {
+	} else {
 		revealEls.forEach( function ( el ) {
 			el.classList.add( 'is-visible' );
 		} );
-	}
-
-	// Kinetic hero headline — mask-reveal on load.
-	var heroTitle = document.querySelector( '.hero__title[data-kinetic]' );
-	if ( heroTitle ) {
-		var showTitle = function () {
-			heroTitle.classList.add( 'is-visible' );
-		};
-		if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
-			showTitle();
-		} else {
-			window.setTimeout( showTitle, 120 );
-		}
-	}
-
-	// Ascent line — draws itself when scrolled into view.
-	var ascentLine = document.querySelector( '.ascent__line' );
-	if ( ascentLine ) {
-		var draw = function () {
-			ascentLine.classList.add( 'is-drawn' );
-		};
-		if ( 'IntersectionObserver' in window ) {
-			var ascentObserver = new IntersectionObserver(
-				function ( entries ) {
-					entries.forEach( function ( entry ) {
-						if ( entry.isIntersecting ) {
-							draw();
-							ascentObserver.unobserve( entry.target );
-						}
-					} );
-				},
-				{ threshold: 0.3 }
-			);
-			ascentObserver.observe( ascentLine );
-		} else {
-			draw();
-		}
 	}
 } )();

@@ -26,8 +26,8 @@ social profiles.
 
 ## Fonts
 
-- **Palanquin Dark** — SIL Open Font License 1.1 (display / headings)
-- **Manrope** — SIL Open Font License 1.1 (body)
+- **Bricolage Grotesque** (headings), **DM Sans** (text), **Roboto Mono** (navigation and labels) — SIL Open Font License 1.1
+
 
 Self-hosted locally (no third-party CDN requests).
 
@@ -36,3 +36,7 @@ Self-hosted locally (no third-party CDN requests).
 The Apex logo (`apex-logo.png`) is supplied by the client and used as the
 primary brand mark. Monochrome variants (white/navy/blue/green) were
 generated for use on dark and coloured backgrounds.
+
+## Home hero photo
+
+`hero-home.jpg` — Pexels photo 4778679 (https://www.pexels.com/photo/4778679/), free to use under the Pexels License.

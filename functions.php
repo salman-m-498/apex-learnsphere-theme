@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'APEX_VERSION', '1.0.0' );
+define( 'APEX_VERSION', '2.1.0' );
 define( 'APEX_DIR', get_template_directory() );
 define( 'APEX_URI', get_template_directory_uri() );
 
@@ -37,8 +37,8 @@ function apex_setup() {
 	add_theme_support(
 		'custom-logo',
 		array(
-			'height'      => 120,
-			'width'       => 120,
+			'height'      => 104,
+			'width'       => 320,
 			'flex-height' => true,
 			'flex-width'  => true,
 		)
@@ -52,7 +52,7 @@ function apex_setup() {
 		)
 	);
 
-	add_editor_style( 'assets/css/editor.css' );
+	add_editor_style( array( 'assets/fonts/fonts.css', 'assets/css/editor.css' ) );
 }
 add_action( 'after_setup_theme', 'apex_setup' );
 
@@ -81,6 +81,15 @@ function apex_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'apex_scripts' );
+
+/**
+ * Flag that JavaScript is available, so scroll-reveal content is only hidden
+ * when the script that reveals it can run.
+ */
+function apex_js_class() {
+	echo "<script>document.documentElement.className += ' js';</script>\n";
+}
+add_action( 'wp_head', 'apex_js_class', 0 );
 
 /**
  * Register widget areas.
@@ -124,6 +133,34 @@ function apex_body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'apex_body_classes' );
+
+/**
+ * Default navigation, shown until a menu is assigned to the Primary location.
+ */
+function apex_fallback_menu() {
+	$audiences = array(
+		'/schools/'          => __( 'For Schools & Institutions', 'apex-learnsphere' ),
+		'/students-parents/' => __( 'For Students & Parents', 'apex-learnsphere' ),
+		'/businesses/'       => __( 'For Businesses & Organisations', 'apex-learnsphere' ),
+		'/sports/'           => __( 'For Sports Organisations', 'apex-learnsphere' ),
+	);
+	?>
+	<ul id="primary-menu" class="site-nav__menu">
+		<li class="menu-item"><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About Us', 'apex-learnsphere' ); ?></a></li>
+		<li class="menu-item"><a href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'Our Services', 'apex-learnsphere' ); ?></a></li>
+		<li class="menu-item menu-item-has-children">
+			<a href="#"><?php esc_html_e( 'Who We Help', 'apex-learnsphere' ); ?></a>
+			<ul class="sub-menu">
+				<?php foreach ( $audiences as $path => $label ) : ?>
+					<li class="menu-item"><a href="<?php echo esc_url( home_url( $path ) ); ?>"><?php echo esc_html( $label ); ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+		<li class="menu-item"><a href="<?php echo esc_url( home_url( '/training/' ) ); ?>"><?php esc_html_e( 'Training & Programmes', 'apex-learnsphere' ); ?></a></li>
+		<li class="menu-item"><a href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Resources', 'apex-learnsphere' ); ?></a></li>
+	</ul>
+	<?php
+}
 
 /**
  * Return the brand logo markup.
