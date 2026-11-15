@@ -10,10 +10,11 @@ get_header();
 
 <!-- Hero -->
 <section class="hero">
+	<div class="hero__peak" aria-hidden="true"></div>
 	<div class="container hero__grid">
 		<div class="hero__content">
 			<p class="eyebrow"><?php esc_html_e( 'Apex LearnSphere', 'apex-learnsphere' ); ?></p>
-			<h1 class="hero__title"><?php esc_html_e( 'Connecting education, people &', 'apex-learnsphere' ); ?> <em><?php esc_html_e( 'opportunity', 'apex-learnsphere' ); ?></em></h1>
+			<h1 class="hero__title"><?php esc_html_e( 'Connecting education, people', 'apex-learnsphere' ); ?> <em>&amp;</em> <span class="accent"><?php esc_html_e( 'opportunity', 'apex-learnsphere' ); ?></span></h1>
 			<p class="lead hero__text"><?php esc_html_e( 'A multidisciplinary consultancy helping schools, students, families, businesses and sports organisations learn smarter, lead better and reach the next stage with confidence.', 'apex-learnsphere' ); ?></p>
 			<div class="hero__actions">
 				<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Consultation', 'apex-learnsphere' ); ?> <span class="btn__arrow" aria-hidden="true">&#8594;</span></a>
@@ -29,16 +30,34 @@ get_header();
 			</div>
 		</div>
 		<div class="hero__visual">
+			<div class="hero__frame" aria-hidden="true"></div>
 			<div class="hero__media">
 				<img src="<?php echo esc_url( apex_img_url( 'hero-home' ) ); ?>" alt="<?php esc_attr_e( 'A teacher guiding students in a bright, modern classroom', 'apex-learnsphere' ); ?>" width="1000" height="1250" fetchpriority="high" />
 				<div class="hero__stat">
-					<strong>5</strong>
-					<span><?php esc_html_e( 'core pillars, one connected approach', 'apex-learnsphere' ); ?></span>
+					<strong>7</strong>
+					<span><?php esc_html_e( 'disciplines, one connected approach', 'apex-learnsphere' ); ?></span>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<!-- Disciplines marquee -->
+<div class="marquee" aria-hidden="true">
+	<div class="marquee__track">
+		<?php
+		$disciplines = array( 'Education', 'Career Guidance', 'Counselling', 'Management', 'Sport', 'Business', 'Leadership' );
+		for ( $i = 0; $i < 2; $i++ ) :
+			?>
+			<div class="marquee__group">
+				<?php foreach ( $disciplines as $d ) : ?>
+					<span><?php echo esc_html( $d ); ?></span>
+					<span class="dot">&#9670;</span>
+				<?php endforeach; ?>
+			</div>
+		<?php endfor; ?>
+	</div>
+</div>
 
 <!-- Pathways -->
 <section class="section">
@@ -84,58 +103,81 @@ get_header();
 	</div>
 </section>
 
-<!-- Pillars -->
+<!-- Pillars (bento) -->
 <section class="section section--soft">
-	<div class="container pillars__layout">
-		<div class="reveal">
+	<div class="container">
+		<div class="section-head reveal">
 			<p class="eyebrow"><?php esc_html_e( 'What we do', 'apex-learnsphere' ); ?></p>
 			<h2><?php esc_html_e( 'Five pillars, one connected approach', 'apex-learnsphere' ); ?></h2>
 			<p class="lead"><?php esc_html_e( 'Our work spans education, career guidance, management, sport and leadership — brought together around people, not boxed into separate silos.', 'apex-learnsphere' ); ?></p>
-			<p><?php esc_html_e( 'Every engagement starts with listening. We understand your situation before we recommend a way forward, so the guidance you receive is practical, specific and achievable.', 'apex-learnsphere' ); ?></p>
-			<a class="btn btn--outline" href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'View all services', 'apex-learnsphere' ); ?> <span class="btn__arrow" aria-hidden="true">&#8594;</span></a>
 		</div>
 
-		<div class="card-grid card-grid--pillars">
-			<div class="pillar-card reveal">
-				<span class="pillar-card__icon"><?php echo apex_icon( 'book-open' ); // phpcs:ignore ?></span>
+		<div class="bento">
+			<div class="bento-card bento-card--feature reveal">
+				<span class="bento-card__icon"><?php echo apex_icon( 'book-open' ); // phpcs:ignore ?></span>
 				<div>
+					<span class="bento-card__num">01</span>
 					<h3><?php esc_html_e( 'Education', 'apex-learnsphere' ); ?></h3>
-					<p><?php esc_html_e( 'School improvement, curriculum, teaching and inclusive learning.', 'apex-learnsphere' ); ?></p>
+					<p><?php esc_html_e( 'School improvement, curriculum, teaching and inclusive learning for schools and institutions.', 'apex-learnsphere' ); ?></p>
 				</div>
 			</div>
-			<div class="pillar-card reveal">
-				<span class="pillar-card__icon"><?php echo apex_icon( 'compass' ); // phpcs:ignore ?></span>
+			<div class="bento-card reveal">
+				<div class="bento-card__top">
+					<span class="bento-card__num">02</span>
+					<span class="bento-card__icon"><?php echo apex_icon( 'compass' ); // phpcs:ignore ?></span>
+				</div>
+				<h3><?php esc_html_e( 'Career Guidance & Counselling', 'apex-learnsphere' ); ?></h3>
+				<p><?php esc_html_e( 'Career exploration, subject choices and higher-education pathways.', 'apex-learnsphere' ); ?></p>
+			</div>
+			<div class="bento-card reveal">
+				<div class="bento-card__top">
+					<span class="bento-card__num">03</span>
+					<span class="bento-card__icon"><?php echo apex_icon( 'target' ); // phpcs:ignore ?></span>
+				</div>
+				<h3><?php esc_html_e( 'Management', 'apex-learnsphere' ); ?></h3>
+				<p><?php esc_html_e( 'Strategic planning, operations and service quality for organisations.', 'apex-learnsphere' ); ?></p>
+			</div>
+			<div class="bento-card reveal">
+				<div class="bento-card__top">
+					<span class="bento-card__num">04</span>
+					<span class="bento-card__icon"><?php echo apex_icon( 'trophy' ); // phpcs:ignore ?></span>
+				</div>
+				<h3><?php esc_html_e( 'Sport', 'apex-learnsphere' ); ?></h3>
+				<p><?php esc_html_e( 'Sports development, team culture and performance environments.', 'apex-learnsphere' ); ?></p>
+			</div>
+			<div class="bento-card reveal">
+				<div class="bento-card__top">
+					<span class="bento-card__num">05</span>
+					<span class="bento-card__icon"><?php echo apex_icon( 'trending-up' ); // phpcs:ignore ?></span>
+				</div>
+				<h3><?php esc_html_e( 'Business & Leadership', 'apex-learnsphere' ); ?></h3>
+				<p><?php esc_html_e( 'Leadership development, communication and team performance.', 'apex-learnsphere' ); ?></p>
+			</div>
+			<div class="bento-card bento-card--cta reveal">
 				<div>
-					<h3><?php esc_html_e( 'Career Guidance & Counselling', 'apex-learnsphere' ); ?></h3>
-					<p><?php esc_html_e( 'Career exploration, subject choices and higher-education pathways.', 'apex-learnsphere' ); ?></p>
+					<h3><?php esc_html_e( 'Not sure where to start?', 'apex-learnsphere' ); ?></h3>
+					<p><?php esc_html_e( 'Tell us a little about your situation and we will point you in the right direction.', 'apex-learnsphere' ); ?></p>
 				</div>
-			</div>
-			<div class="pillar-card reveal">
-				<span class="pillar-card__icon"><?php echo apex_icon( 'target' ); // phpcs:ignore ?></span>
-				<div>
-					<h3><?php esc_html_e( 'Management', 'apex-learnsphere' ); ?></h3>
-					<p><?php esc_html_e( 'Strategic planning, operations and service quality for organisations.', 'apex-learnsphere' ); ?></p>
-				</div>
-			</div>
-			<div class="pillar-card reveal">
-				<span class="pillar-card__icon"><?php echo apex_icon( 'trophy' ); // phpcs:ignore ?></span>
-				<div>
-					<h3><?php esc_html_e( 'Sport', 'apex-learnsphere' ); ?></h3>
-					<p><?php esc_html_e( 'Sports development, team culture and performance environments.', 'apex-learnsphere' ); ?></p>
-				</div>
-			</div>
-			<div class="pillar-card reveal">
-				<span class="pillar-card__icon"><?php echo apex_icon( 'trending-up' ); // phpcs:ignore ?></span>
-				<div>
-					<h3><?php esc_html_e( 'Business & Leadership', 'apex-learnsphere' ); ?></h3>
-					<p><?php esc_html_e( 'Leadership development, communication and team performance.', 'apex-learnsphere' ); ?></p>
-				</div>
-			</div>
-			<div class="pillar-card pillar-card--cta reveal">
-				<h3><?php esc_html_e( 'Not sure where to start?', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'Tell us a little about your situation and we will point you in the right direction.', 'apex-learnsphere' ); ?></p>
 				<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Talk to us', 'apex-learnsphere' ); ?></a>
 			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Stats -->
+<section class="stats-band">
+	<div class="container stats-band__grid">
+		<div class="stat reveal">
+			<div class="stat__num"><span class="count" data-count="7">0</span></div>
+			<p class="stat__label"><?php esc_html_e( 'disciplines of expertise', 'apex-learnsphere' ); ?></p>
+		</div>
+		<div class="stat reveal">
+			<div class="stat__num"><span class="count" data-count="5">0</span></div>
+			<p class="stat__label"><?php esc_html_e( 'core service pillars', 'apex-learnsphere' ); ?></p>
+		</div>
+		<div class="stat reveal">
+			<div class="stat__num"><span class="count" data-count="6">0</span></div>
+			<p class="stat__label"><?php esc_html_e( 'audiences we serve', 'apex-learnsphere' ); ?></p>
 		</div>
 	</div>
 </section>

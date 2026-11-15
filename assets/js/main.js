@@ -47,4 +47,51 @@
 			el.classList.add( 'is-visible' );
 		} );
 	}
+
+	// Count-up numbers for the stats band.
+	var counters = document.querySelectorAll( '.count[data-count]' );
+	var reduceMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+
+	if ( counters.length ) {
+		var runCount = function ( el ) {
+			var target = parseInt( el.getAttribute( 'data-count' ), 10 ) || 0;
+			if ( reduceMotion ) {
+				el.textContent = target;
+				return;
+			}
+			var duration = 1300;
+			var start = null;
+			var step = function ( ts ) {
+				if ( ! start ) {
+					start = ts;
+				}
+				var progress = Math.min( ( ts - start ) / duration, 1 );
+				var eased = 1 - Math.pow( 1 - progress, 3 );
+				el.textContent = Math.round( eased * target );
+				if ( progress < 1 ) {
+					window.requestAnimationFrame( step );
+				}
+			};
+			window.requestAnimationFrame( step );
+		};
+
+		if ( 'IntersectionObserver' in window ) {
+			var countObserver = new IntersectionObserver(
+				function ( entries ) {
+					entries.forEach( function ( entry ) {
+						if ( entry.isIntersecting ) {
+							runCount( entry.target );
+							countObserver.unobserve( entry.target );
+						}
+					} );
+				},
+				{ threshold: 0.5 }
+			);
+			counters.forEach( function ( el ) {
+				countObserver.observe( el );
+			} );
+		} else {
+			counters.forEach( runCount );
+		}
+	}
 } )();
