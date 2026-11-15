@@ -16,10 +16,13 @@ get_header();
 	<div class="hero__orb hero__orb--ring" aria-hidden="true"></div>
 	<div class="container hero__grid">
 		<div class="hero__content">
+			<p class="hero__motto">
+				<span><?php esc_html_e( 'Think ahead', 'apex-learnsphere' ); ?></span><span class="hero__motto-sep" aria-hidden="true"> · </span><span><?php esc_html_e( 'Learn smart', 'apex-learnsphere' ); ?></span><span class="hero__motto-sep" aria-hidden="true"> · </span><span><?php esc_html_e( 'Lead the future', 'apex-learnsphere' ); ?></span>
+			</p>
 			<p class="eyebrow"><?php esc_html_e( 'Apex LearnSphere', 'apex-learnsphere' ); ?></p>
 			<h1 class="hero__title" data-kinetic>
-				<span class="line"><span class="line__inner"><?php esc_html_e( 'Connecting education, people', 'apex-learnsphere' ); ?></span></span>
-				<span class="line"><span class="line__inner">&amp; <span class="accent"><?php esc_html_e( 'opportunity', 'apex-learnsphere' ); ?></span></span></span>
+				<span class="line"><span class="line__inner"><?php esc_html_e( 'Connecting education,', 'apex-learnsphere' ); ?></span></span>
+				<span class="line"><span class="line__inner"><?php esc_html_e( 'people &', 'apex-learnsphere' ); ?> <span class="accent"><?php esc_html_e( 'opportunity', 'apex-learnsphere' ); ?></span></span></span>
 			</h1>
 			<p class="lead hero__text"><?php esc_html_e( 'A multidisciplinary consultancy helping schools, students, families, businesses and sports organisations learn smarter, lead better and reach the next stage with confidence.', 'apex-learnsphere' ); ?></p>
 			<div class="hero__actions">
@@ -53,44 +56,59 @@ get_header();
 </div>
 
 <!-- Pathways -->
-<section class="section">
+<section class="section section--pathways">
 	<div class="container">
-		<div class="section-head reveal">
-			<p class="eyebrow"><?php esc_html_e( 'Who we help', 'apex-learnsphere' ); ?></p>
+		<div class="section-head section-head--center reveal">
+			<p class="eyebrow eyebrow--center"><?php esc_html_e( 'Who we help', 'apex-learnsphere' ); ?></p>
 			<h2><?php esc_html_e( 'How can we help you?', 'apex-learnsphere' ); ?></h2>
 			<p class="lead"><?php esc_html_e( 'Choose the path that fits you — we will guide you to the right support and a practical next step.', 'apex-learnsphere' ); ?></p>
 		</div>
 
 		<div class="index-grid">
 			<a class="index-item reveal" href="<?php echo esc_url( home_url( '/schools/' ) ); ?>">
-				<span class="index-item__num">01</span>
+				<div class="index-item__head">
+					<span class="index-item__icon"><?php echo apex_icon( 'school' ); // phpcs:ignore ?></span>
+					<span class="index-item__num">01</span>
+				</div>
 				<h3><?php esc_html_e( 'Schools & Institutions', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'School improvement, leadership, teacher development and inclusive education.', 'apex-learnsphere' ); ?></p>
-				<span class="index-item__arrow" aria-hidden="true">&#8599;</span>
+				<p><?php esc_html_e( 'School improvement, leadership and teacher development.', 'apex-learnsphere' ); ?></p>
+				<span class="index-item__link"><?php esc_html_e( 'Explore', 'apex-learnsphere' ); ?> <span class="arrow" aria-hidden="true">&#8594;</span></span>
 			</a>
 			<a class="index-item reveal" href="<?php echo esc_url( home_url( '/students-parents/' ) ); ?>">
-				<span class="index-item__num">02</span>
+				<div class="index-item__head">
+					<span class="index-item__icon"><?php echo apex_icon( 'graduate' ); // phpcs:ignore ?></span>
+					<span class="index-item__num">02</span>
+				</div>
 				<h3><?php esc_html_e( 'Students', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'Career guidance, subject and stream choices, and higher-education pathways.', 'apex-learnsphere' ); ?></p>
-				<span class="index-item__arrow" aria-hidden="true">&#8599;</span>
+				<p><?php esc_html_e( 'Career guidance, subject choices and pathways.', 'apex-learnsphere' ); ?></p>
+				<span class="index-item__link"><?php esc_html_e( 'Explore', 'apex-learnsphere' ); ?> <span class="arrow" aria-hidden="true">&#8594;</span></span>
 			</a>
 			<a class="index-item reveal" href="<?php echo esc_url( home_url( '/students-parents/' ) ); ?>">
-				<span class="index-item__num">03</span>
+				<div class="index-item__head">
+					<span class="index-item__icon"><?php echo apex_icon( 'family' ); // phpcs:ignore ?></span>
+					<span class="index-item__num">03</span>
+				</div>
 				<h3><?php esc_html_e( 'Parents & Families', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'Educational decisions, school choice and support for your child&#39;s learning.', 'apex-learnsphere' ); ?></p>
-				<span class="index-item__arrow" aria-hidden="true">&#8599;</span>
+				<p><?php esc_html_e( 'School choice and support for your child&#39;s learning.', 'apex-learnsphere' ); ?></p>
+				<span class="index-item__link"><?php esc_html_e( 'Explore', 'apex-learnsphere' ); ?> <span class="arrow" aria-hidden="true">&#8594;</span></span>
 			</a>
 			<a class="index-item reveal" href="<?php echo esc_url( home_url( '/businesses/' ) ); ?>">
-				<span class="index-item__num">04</span>
+				<div class="index-item__head">
+					<span class="index-item__icon"><?php echo apex_icon( 'briefcase' ); // phpcs:ignore ?></span>
+					<span class="index-item__num">04</span>
+				</div>
 				<h3><?php esc_html_e( 'Businesses & Organisations', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'Management consultancy, leadership development and professional training.', 'apex-learnsphere' ); ?></p>
-				<span class="index-item__arrow" aria-hidden="true">&#8599;</span>
+				<p><?php esc_html_e( 'Management consultancy and leadership development.', 'apex-learnsphere' ); ?></p>
+				<span class="index-item__link"><?php esc_html_e( 'Explore', 'apex-learnsphere' ); ?> <span class="arrow" aria-hidden="true">&#8594;</span></span>
 			</a>
 			<a class="index-item reveal" href="<?php echo esc_url( home_url( '/sports/' ) ); ?>">
-				<span class="index-item__num">05</span>
+				<div class="index-item__head">
+					<span class="index-item__icon"><?php echo apex_icon( 'trophy' ); // phpcs:ignore ?></span>
+					<span class="index-item__num">05</span>
+				</div>
 				<h3><?php esc_html_e( 'Sports Organisations', 'apex-learnsphere' ); ?></h3>
-				<p><?php esc_html_e( 'Sports development, team culture and leadership through sport.', 'apex-learnsphere' ); ?></p>
-				<span class="index-item__arrow" aria-hidden="true">&#8599;</span>
+				<p><?php esc_html_e( 'Team culture and leadership through sport.', 'apex-learnsphere' ); ?></p>
+				<span class="index-item__link"><?php esc_html_e( 'Explore', 'apex-learnsphere' ); ?> <span class="arrow" aria-hidden="true">&#8594;</span></span>
 			</a>
 		</div>
 	</div>

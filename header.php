@@ -21,21 +21,24 @@ $brand = apex_brand();
 	<div class="site-header__inner container">
 		<div class="site-branding">
 			<a class="site-branding__link" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-				<?php
-				if ( has_custom_logo() ) {
-					the_custom_logo();
-				} else {
-					apex_logo( 'default' );
-				}
-				?>
+				<?php apex_logo( 'white' ); ?>
 				<span class="screen-reader-text"><?php bloginfo( 'name' ); ?></span>
 			</a>
 		</div>
 
-		<button class="menu-btn" data-menu-open aria-controls="site-menu" aria-expanded="false">
-			<span class="menu-btn__label"><?php esc_html_e( 'Menu', 'apex-learnsphere' ); ?></span>
-			<span class="menu-btn__icon" aria-hidden="true"></span>
-		</button>
+		<div class="site-header__right">
+			<nav class="site-header__links" aria-label="<?php esc_attr_e( 'Primary links', 'apex-learnsphere' ); ?>">
+				<a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About', 'apex-learnsphere' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'Services', 'apex-learnsphere' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/training/' ) ); ?>"><?php esc_html_e( 'Training', 'apex-learnsphere' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'apex-learnsphere' ); ?></a>
+			</nav>
+
+			<button class="menu-btn" data-menu-open aria-controls="site-menu" aria-expanded="false">
+				<span class="menu-btn__label"><?php esc_html_e( 'Menu', 'apex-learnsphere' ); ?></span>
+				<span class="menu-btn__icon" aria-hidden="true"></span>
+			</button>
+		</div>
 	</div>
 </header>
 
@@ -44,9 +47,8 @@ $brand = apex_brand();
 		<a class="menu-overlay__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php apex_logo( 'white' ); ?>
 		</a>
-		<button class="menu-btn menu-btn--close" data-menu-close aria-controls="site-menu" aria-expanded="true">
-			<span class="menu-btn__label"><?php esc_html_e( 'Close', 'apex-learnsphere' ); ?></span>
-			<span class="menu-btn__icon" aria-hidden="true"></span>
+		<button class="menu-close" data-menu-close aria-controls="site-menu" aria-expanded="true" aria-label="<?php esc_attr_e( 'Close menu', 'apex-learnsphere' ); ?>">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
 		</button>
 	</div>
 

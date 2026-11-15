@@ -45,7 +45,7 @@
 	--font-display: 'Palanquin Dark', 'Segoe UI', system-ui, -apple-system, sans-serif;
 	--font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-	--fs-hero: clamp(2.7rem, 6.4vw, 5.4rem);
+	--fs-hero: clamp(2.3rem, 4.2vw, 3.2rem);
 	--fs-h1: clamp(2.3rem, 4.6vw, 3.7rem);
 	--fs-h2: clamp(1.8rem, 3.2vw, 2.7rem);
 	--fs-h3: clamp(1.22rem, 1.8vw, 1.5rem);
@@ -313,8 +313,17 @@ ul, ol {
 	position: sticky;
 	top: 0;
 	z-index: 300;
-	background: #fff;
-	border-bottom: 1px solid var(--line);
+	background: var(--navy);
+}
+
+.site-header::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 3px;
+	background: linear-gradient(90deg, var(--green), var(--blue));
 }
 
 .site-header__inner {
@@ -335,6 +344,30 @@ ul, ol {
 	height: 44px;
 }
 
+.site-header__right {
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+}
+
+.site-header__links {
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
+}
+
+.site-header__links a {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: #c3d2e0;
+	text-decoration: none;
+	transition: color var(--dur) var(--ease);
+}
+
+.site-header__links a:hover {
+	color: #fff;
+}
+
 .menu-btn {
 	display: inline-flex;
 	align-items: center;
@@ -347,7 +380,7 @@ ul, ol {
 	font-size: 0.95rem;
 	font-weight: 600;
 	letter-spacing: 0.01em;
-	color: var(--navy);
+	color: #fff;
 }
 
 .menu-btn__icon {
@@ -392,13 +425,29 @@ ul, ol {
 	height: 44px;
 }
 
-.menu-btn--close {
+.menu-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 46px;
+	height: 46px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	background: none;
+	cursor: pointer;
 	color: #fff;
+	transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 
-.menu-btn--close .menu-btn__icon {
-	background: #8fc4a8;
-	clip-path: polygon(50% 100%, 0 0, 100% 0);
+.menu-close svg {
+	width: 20px;
+	height: 20px;
+}
+
+.menu-close:hover {
+	border-color: #8fc4a8;
+	color: #8fc4a8;
+	background: rgba(255, 255, 255, 0.06);
 }
 
 .menu-overlay__body {
@@ -597,7 +646,7 @@ body.menu-open {
 
 .hero__grid {
 	display: grid;
-	grid-template-columns: 1.15fr 0.85fr;
+	grid-template-columns: 1.05fr 0.95fr;
 	gap: clamp(var(--space-5), 6vw, var(--space-7));
 	align-items: center;
 	position: relative;
@@ -606,6 +655,22 @@ body.menu-open {
 .hero__content {
 	position: relative;
 	z-index: 2;
+}
+
+.hero__motto {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	margin: 0 0 var(--space-2);
+	font-size: var(--fs-xs);
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--c-text-muted);
+}
+
+.hero__motto-sep {
+	color: var(--c-accent);
 }
 
 .hero .eyebrow {
@@ -702,7 +767,7 @@ body.menu-open {
 
 .hero__media img {
 	border-radius: 220px 220px 18px 18px;
-	aspect-ratio: 4 / 5;
+	aspect-ratio: 3 / 4;
 	object-fit: cover;
 	width: 100%;
 	box-shadow: var(--shadow-lg);
@@ -975,8 +1040,15 @@ body.menu-open {
 	align-self: flex-start;
 }
 
-/* 8a. Editorial index grid (pathways)
+/* 8a. Pathways card grid
    ========================================================================== */
+.section--pathways {
+	background:
+		radial-gradient(42% 60% at 100% 0%, rgba(77, 150, 111, 0.1), transparent 60%),
+		radial-gradient(42% 60% at 0% 100%, rgba(42, 106, 168, 0.1), transparent 60%),
+		#f2f7f4;
+}
+
 .index-grid {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
@@ -986,32 +1058,65 @@ body.menu-open {
 .index-item {
 	display: flex;
 	flex-direction: column;
-	gap: 0.6rem;
-	padding-top: var(--space-2);
-	border-top: 1px solid var(--line);
+	gap: 0.7rem;
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	padding: var(--space-3);
 	text-decoration: none;
 	color: inherit;
-	transition: border-color var(--dur) var(--ease);
+	transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .index-item:hover {
-	border-color: var(--c-accent);
+	transform: translateY(-5px);
+	box-shadow: var(--shadow-md);
+	border-color: var(--green);
 	color: inherit;
 	text-decoration: none;
+}
+
+.index-item__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.index-item__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 46px;
+	height: 46px;
+	border-radius: var(--radius-sm);
+	background: var(--green-soft);
+	color: var(--green-dark);
+	transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.index-item:hover .index-item__icon {
+	background: var(--green);
+	color: #fff;
+}
+
+.index-item__icon .icon {
+	width: 24px;
+	height: 24px;
 }
 
 .index-item__num {
 	font-family: var(--font-display);
-	font-size: 0.9rem;
+	font-size: 1rem;
 	font-weight: 600;
 	letter-spacing: 0.06em;
 	color: var(--c-accent);
 }
 
 .index-item h3 {
-	font-size: 1.2rem;
-	line-height: 1.2;
+	font-size: 1.22rem;
+	line-height: 1.25;
 	margin: 0;
+	color: var(--c-heading);
 	transition: color var(--dur) var(--ease);
 }
 
@@ -1024,19 +1129,24 @@ body.menu-open {
 	color: var(--c-text-soft);
 	margin: 0;
 	line-height: 1.55;
+	flex-grow: 1;
 }
 
-.index-item__arrow {
-	font-size: 1.1rem;
+.index-item__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: var(--fs-sm);
+	font-weight: 600;
 	color: var(--c-primary);
-	opacity: 0;
-	transform: translate(-6px, 6px);
-	transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 
-.index-item:hover .index-item__arrow {
-	opacity: 1;
-	transform: translate(0, 0);
+.index-item__link .arrow {
+	transition: transform var(--dur) var(--ease);
+}
+
+.index-item:hover .index-item__link .arrow {
+	transform: translateX(3px);
 }
 
 /* 8b. Editorial index list (pillars)
@@ -2233,6 +2343,10 @@ body.menu-open {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
+	.index-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
 	.site-footer__grid {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -2244,6 +2358,10 @@ body.menu-open {
 	.split,
 	.contact-grid {
 		grid-template-columns: 1fr;
+	}
+
+	.site-header__links {
+		display: none;
 	}
 
 	.hero__visual {
