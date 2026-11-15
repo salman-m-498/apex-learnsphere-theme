@@ -1,24 +1,49 @@
 /**
  * Apex LearnSphere — front-end behaviour.
- * Mobile nav toggle, scroll reveal, kinetic hero headline, ascent-line draw.
+ * Full-screen index menu, scroll reveal, kinetic hero headline, ascent-line draw.
  */
 ( function () {
 	'use strict';
 
-	// Mobile navigation toggle.
-	var toggle = document.querySelector( '.nav-toggle' );
-	var nav = document.getElementById( 'site-navigation' );
+	// Full-screen overlay menu.
+	var overlay = document.getElementById( 'site-menu' );
+	var openBtn = document.querySelector( '[data-menu-open]' );
+	var closeBtn = document.querySelector( '[data-menu-close]' );
 
-	if ( toggle && nav ) {
-		toggle.addEventListener( 'click', function () {
-			var isOpen = nav.classList.toggle( 'is-open' );
-			toggle.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
+	function setMenu( open ) {
+		if ( ! overlay ) {
+			return;
+		}
+		document.body.classList.toggle( 'menu-open', open );
+		overlay.classList.toggle( 'is-open', open );
+		overlay.setAttribute( 'aria-hidden', open ? 'false' : 'true' );
+		if ( openBtn ) {
+			openBtn.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+		}
+		if ( closeBtn ) {
+			closeBtn.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+		}
+	}
+
+	if ( overlay ) {
+		if ( openBtn ) {
+			openBtn.addEventListener( 'click', function () {
+				setMenu( true );
+			} );
+		}
+		if ( closeBtn ) {
+			closeBtn.addEventListener( 'click', function () {
+				setMenu( false );
+			} );
+		}
+		overlay.addEventListener( 'click', function ( e ) {
+			if ( e.target.closest( 'a' ) ) {
+				setMenu( false );
+			}
 		} );
-
-		nav.addEventListener( 'click', function ( e ) {
-			if ( e.target.closest( 'a' ) && nav.classList.contains( 'is-open' ) ) {
-				nav.classList.remove( 'is-open' );
-				toggle.setAttribute( 'aria-expanded', 'false' );
+		document.addEventListener( 'keydown', function ( e ) {
+			if ( e.key === 'Escape' && overlay.classList.contains( 'is-open' ) ) {
+				setMenu( false );
 			}
 		} );
 	}

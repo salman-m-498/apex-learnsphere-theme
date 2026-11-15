@@ -4,6 +4,7 @@
  *
  * @package apex-learnsphere
  */
+$brand = apex_brand();
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -31,30 +32,67 @@
 			</a>
 		</div>
 
-		<nav class="site-nav" id="site-navigation" aria-label="<?php esc_attr_e( 'Primary navigation', 'apex-learnsphere' ); ?>">
+		<button class="menu-btn" data-menu-open aria-controls="site-menu" aria-expanded="false">
+			<span class="menu-btn__label"><?php esc_html_e( 'Menu', 'apex-learnsphere' ); ?></span>
+			<span class="menu-btn__icon" aria-hidden="true"></span>
+		</button>
+	</div>
+</header>
+
+<div class="menu-overlay" id="site-menu" aria-hidden="true">
+	<div class="menu-overlay__top container">
+		<a class="menu-overlay__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+			<?php apex_logo( 'white' ); ?>
+		</a>
+		<button class="menu-btn menu-btn--close" data-menu-close aria-controls="site-menu" aria-expanded="true">
+			<span class="menu-btn__label"><?php esc_html_e( 'Close', 'apex-learnsphere' ); ?></span>
+			<span class="menu-btn__icon" aria-hidden="true"></span>
+		</button>
+	</div>
+
+	<div class="menu-overlay__body container">
+		<nav class="menu-overlay__nav" aria-label="<?php esc_attr_e( 'Primary navigation', 'apex-learnsphere' ); ?>">
 			<?php
 			wp_nav_menu(
 				array(
 					'theme_location' => 'primary',
-					'menu_id'        => 'primary-menu',
+					'menu_id'        => 'overlay-menu',
 					'container'      => false,
-					'fallback_cb'    => false,
 					'depth'          => 2,
+					'fallback_cb'    => false,
 				)
 			);
 			?>
-			<div class="site-nav__cta">
-				<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Consultation', 'apex-learnsphere' ); ?></a>
-			</div>
 		</nav>
 
-		<button class="nav-toggle" aria-controls="site-navigation" aria-expanded="false">
-			<span class="nav-toggle__bar"></span>
-			<span class="nav-toggle__bar"></span>
-			<span class="nav-toggle__bar"></span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'apex-learnsphere' ); ?></span>
-		</button>
+		<div class="menu-overlay__footer">
+			<p class="menu-overlay__tagline"><?php echo esc_html( $brand['tagline'] ); ?></p>
+			<div class="menu-overlay__contact">
+				<a href="mailto:<?php echo esc_attr( $brand['email'] ); ?>"><?php echo esc_html( $brand['email'] ); ?></a>
+				<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $brand['phone'] ) ); ?>"><?php echo esc_html( $brand['phone'] ); ?></a>
+				<a href="https://wa.me/<?php echo esc_attr( $brand['whatsapp'] ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WhatsApp', 'apex-learnsphere' ); ?></a>
+			</div>
+			<div class="menu-overlay__actions">
+				<a class="btn btn--light" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Consultation', 'apex-learnsphere' ); ?></a>
+				<div class="menu-overlay__social">
+					<?php
+					$socials = array(
+						'Instagram' => 'https://instagram.com/apexlearnsphere',
+						'LinkedIn'  => 'https://linkedin.com/company/apexlearnsphere',
+						'Facebook'  => 'https://facebook.com/apexlearnsphere',
+						'YouTube'   => 'https://youtube.com/@apexlearnsphere',
+					);
+					foreach ( $socials as $label => $url ) :
+						?>
+						<a class="social-link social-link--on-dark" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer">
+							<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
+							<?php echo apex_social_svg( strtolower( $label ) ); // phpcs:ignore ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
 	</div>
-</header>
+</div>
 
 <main id="main" class="site-main">
