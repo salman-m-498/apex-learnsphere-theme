@@ -1,6 +1,6 @@
 /**
  * Apex LearnSphere — front-end behaviour.
- * Lightweight: mobile nav toggle + subtle scroll reveal.
+ * Mobile nav toggle, scroll reveal, kinetic hero headline, ascent-line draw.
  */
 ( function () {
 	'use strict';
@@ -15,7 +15,6 @@
 			toggle.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
 		} );
 
-		// Close menu when a link is clicked (mobile).
 		nav.addEventListener( 'click', function ( e ) {
 			if ( e.target.closest( 'a' ) && nav.classList.contains( 'is-open' ) ) {
 				nav.classList.remove( 'is-open' );
@@ -48,50 +47,40 @@
 		} );
 	}
 
-	// Count-up numbers for the stats band.
-	var counters = document.querySelectorAll( '.count[data-count]' );
-	var reduceMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-
-	if ( counters.length ) {
-		var runCount = function ( el ) {
-			var target = parseInt( el.getAttribute( 'data-count' ), 10 ) || 0;
-			if ( reduceMotion ) {
-				el.textContent = target;
-				return;
-			}
-			var duration = 1300;
-			var start = null;
-			var step = function ( ts ) {
-				if ( ! start ) {
-					start = ts;
-				}
-				var progress = Math.min( ( ts - start ) / duration, 1 );
-				var eased = 1 - Math.pow( 1 - progress, 3 );
-				el.textContent = Math.round( eased * target );
-				if ( progress < 1 ) {
-					window.requestAnimationFrame( step );
-				}
-			};
-			window.requestAnimationFrame( step );
+	// Kinetic hero headline — mask-reveal on load.
+	var heroTitle = document.querySelector( '.hero__title[data-kinetic]' );
+	if ( heroTitle ) {
+		var showTitle = function () {
+			heroTitle.classList.add( 'is-visible' );
 		};
+		if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
+			showTitle();
+		} else {
+			window.setTimeout( showTitle, 120 );
+		}
+	}
 
+	// Ascent line — draws itself when scrolled into view.
+	var ascentLine = document.querySelector( '.ascent__line' );
+	if ( ascentLine ) {
+		var draw = function () {
+			ascentLine.classList.add( 'is-drawn' );
+		};
 		if ( 'IntersectionObserver' in window ) {
-			var countObserver = new IntersectionObserver(
+			var ascentObserver = new IntersectionObserver(
 				function ( entries ) {
 					entries.forEach( function ( entry ) {
 						if ( entry.isIntersecting ) {
-							runCount( entry.target );
-							countObserver.unobserve( entry.target );
+							draw();
+							ascentObserver.unobserve( entry.target );
 						}
 					} );
 				},
-				{ threshold: 0.5 }
+				{ threshold: 0.3 }
 			);
-			counters.forEach( function ( el ) {
-				countObserver.observe( el );
-			} );
+			ascentObserver.observe( ascentLine );
 		} else {
-			counters.forEach( runCount );
+			draw();
 		}
 	}
 } )();

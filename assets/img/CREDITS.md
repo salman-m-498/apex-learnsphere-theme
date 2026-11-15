@@ -26,8 +26,8 @@ social profiles.
 
 ## Fonts
 
-- **Fraunces** — SIL Open Font License 1.1
-- **Inter** — SIL Open Font License 1.1
+- **Palanquin Dark** — SIL Open Font License 1.1 (display / headings)
+- **Manrope** — SIL Open Font License 1.1 (body)
 
 Self-hosted locally (no third-party CDN requests).
 
